@@ -7,7 +7,8 @@
 - Возвращает список по состоянию
 - Функция возвращает список на убывание по дате
 ## Установка
-Клонируйте репозиторий с помощью команды  git clone git@github.com:KirillBogdanov27/homework.git
+1.Клонируйте репозиторий с помощью команды  git clone git@github.com:KirillBogdanov27/homework.git
+2.Установите зависимости с помощью команды poetry install
 
 
 
