@@ -1,4 +1,4 @@
-from masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(card_type_num: str) -> str:
@@ -15,7 +15,7 @@ def mask_account_card(card_type_num: str) -> str:
                 is_alpha += i
             else:
                 is_digit += i
-                return f"{name_card} {get_mask_card_number(is_digit)}"
+        return f"{name_card} {get_mask_card_number(is_digit)}"
 
 
 print(mask_account_card("Visa Union 8990922113665229"))
