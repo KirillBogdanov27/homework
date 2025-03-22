@@ -1,10 +1,9 @@
-def filter_by_state(list_of_state: list[dict], state :str="EXECUTED") -> list:
-    """Возвращает список по состоянию"""
-    new_list = []
-    for key in list_of_state:
-        if key["state"] == state:
-            new_list.append(key)
-    return new_list
+def filter_by_state(data: list[dict], state: str = "EXECUTED") -> list:
+    """
+    Функция фильтрует список словарей по значению ключа 'state'.
+
+    """
+    return [item for item in data if item.get("state") == state]
 
 
 def sort_by_date(list_of_date: list[dict], descending: bool = True) -> list:
