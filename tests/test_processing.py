@@ -1,40 +1,57 @@
 import pytest
 
+from src.processing import filter_by_state, sort_by_date
 
-@pytest.fixture
-def valid_card_number():
-    return "1234567812345678"
-
-
-@pytest.fixture
-def valid_account_number():
-    return "1234567890123456"
-
-
-@pytest.fixture
-def valid_account_info():
-    return "Счет 1234567890123456"
+# Пример данных для тестов
+data = [
+    {"date": "2024-01-01T12:00:00.000000", "state": "EXECUTED", "amount": 100},
+    {"date": "2024-01-05T12:00:00.000000", "state": "CANCELLED", "amount": 200},
+    {"date": "2024-01-03T12:00:00.000000", "state": "EXECUTED", "amount": 300},
+    {"date": "2024-01-02T12:00:00.000000", "state": "EXECUTED", "amount": 400},
+    {"date": "2024-01-05T12:00:00.000000", "state": "EXECUTED", "amount": 150},  # Одинаковая дата для тестирования
+]
 
 
 @pytest.fixture
-def valid_card_info():
-    return "Visa 1234567812345678"
+def test_data():
+    return data
 
 
-@pytest.fixture
-def valid_date_string():
-    return "2023-10-01"
+@pytest.mark.parametrize("state, expected_length", [("EXECUTED", 4), ("CANCELLED", 1)])
+def test_filter_by_state(test_data, state, expected_length):
+    # Тестирование фильтрации по состоянию
+    filtered_transactions = filter_by_state(test_data, state)
+    assert len(filtered_transactions) == expected_length
+    assert all(item["state"] == state for item in filtered_transactions)
 
 
-@pytest.fixture
-def sample_data():
-    """
-    Фикстура для тестовых данных.
-    """
-    return [
-        {"id": 1, "state": "EXECUTED", "date": "2023-10-01"},
-        {"id": 2, "state": "CANCELLED", "date": "2023-10-02"},
-        {"id": 3, "state": "EXECUTED", "date": "2023-09-30"},
-        {"id": 4, "state": "EXECUTED", "date": "2023-10-03"},
-        {"id": 5, "state": "CANCELLED", "date": "2023-10-04"},
-    ]
+@pytest.mark.parametrize(
+    "reverse_order, expected_dates",
+    [
+        (
+            True,
+            [
+                "2024-01-05T12:00:00.000000",  # Последняя по дате
+                "2024-01-05T12:00:00.000000",  # Одинаковая дата
+                "2024-01-03T12:00:00.000000",
+                "2024-01-02T12:00:00.000000",
+                "2024-01-01T12:00:00.000000",  # Первая по дате
+            ],
+        ),
+        (
+            False,
+            [
+                "2024-01-01T12:00:00.000000",
+                "2024-01-02T12:00:00.000000",
+                "2024-01-03T12:00:00.000000",
+                "2024-01-05T12:00:00.000000",  # Одинаковая дата
+                "2024-01-05T12:00:00.000000",  # Последняя по дате
+            ],
+        ),
+    ],
+)
+def test_sort_by_date(test_data, reverse_order, expected_dates):
+    # Тестирование сортировки по дате
+    sorted_data = sort_by_date(test_data, reverse_order)
+    sorted_dates = [item["date"] for item in sorted_data]
+    assert sorted_dates == expected_dates
