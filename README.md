@@ -9,7 +9,21 @@
 ## Установка
 1.Клонируйте репозиторий с помощью команды  git clone git@github.com:KirillBogdanov27/homework.git
 2.Установите зависимости с помощью команды poetry install
-
+### Тесты для функций
+- test_mask_account_card_account: Проверяет, что функция mask_account_card возвращает правильную маску для счета.
+- test_mask_account_card_card: Проверяет, что функция mask_account_card правильно обрабатывает информацию о карте.
+- test_mask_account_card_unknown_type: Убедитесь, что функция вызывает исключение при передаче неизвестного типа информации.
+- test_get_date: Проверяет правильное форматирование даты.
+- test_get_date_invalid_format: Убедитесь, что функция вызывает исключение при передаче неправильного формата даты.
+- test_get_mask_card_number: Проверяет, что функция get_mask_card_number возвращает правильную маску для полного номера карты.
+- test_get_mask_account: Проверяет, что функция get_mask_account возвращает последние 4 цифры номера счета.
+- test_get_mask_card_number_short: Проверяет корректность обработки короткого номера карты.
+- test_get_mask_account_short: Проверяет корректность обработки короткого номера счета.
+- test_filter_by_state: Тестирует фильтрацию по состоянию EXECUTED.
+- test_filter_by_state_default: Тестирует фильтрацию по умолчанию.
+- test_filter_by_state_no_matches: Проверяет, что возвращается пустой список, если нет совпадений.
+- test_sort_by_date: Проверяет, правильно ли сортируется список по дате в порядке убывания.
+- test_sort_by_date_descending: Проверяет, правильно ли сортируется список по дате в порядке возрастания.
 
 
 
